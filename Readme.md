@@ -1,5 +1,11 @@
 # Log4jPatch
 
+# -- This repository has been archived --
+
+Further development of this tool will continue at [karianna/hotpatch-for-apache-log4j2](https://github.com/karianna/hotpatch-for-apache-log4j2).
+
+Thanks for sharing, commenting, trying it out and contributing to this project!
+
 Kudos to Volker Simonis for the original patch, he continues to amaze and 
 delight in the Java industry :-) - Original patch at https://github.com/simonis/Log4jPatch
 

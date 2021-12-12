@@ -60,7 +60,7 @@ public class Log4jPatch {
     /**
      * The main method for the JavaAgent that we use for performing the transform
      *
-     * @param args            - Required parameter (but is empty in this case)
+     * @param args            Required parameter (but is empty in this case)
      * @param instrumentation The instrumentation class we'll use to transform.
      */
     public static void agentmain(String args, Instrumentation instrumentation) {
@@ -195,7 +195,7 @@ public class Log4jPatch {
      * When the agent attaches the payload is delivered (see agentmain method)
      *
      * @param jarFile The Java Agent (ourselves)
-     * @param pid The pid of the JVM
+     * @param pid     The pid of the JVM
      */
     private static void patchJVM(File jarFile, String pid) {
         if (pid != null) {
@@ -286,7 +286,7 @@ public class Log4jPatch {
      *
      * @param args - Log4jPatch [<pid> [<pid> ..]]"
      * @throws Exception - Note this program can crash fairly easily so make
-     *                     sure you are able to capture stderr
+     *                   sure you are able to capture stderr
      */
     public static void main(String args[]) throws Exception {
 
@@ -328,7 +328,7 @@ public class Log4jPatch {
                     return;
                 }
             }
-            // TODO Extracxt this to its on method for SRP
+        // TODO Extract this to its on method for SRP
         } else if (args.length == 1 && ("-h".equals(args[0]) || "-help".equals(args[0]) || "--help".equals(args[0]))) {
             System.out.println("usage: Log4jPatch [<pid> [<pid> ..]]");
             return;
@@ -343,26 +343,32 @@ public class Log4jPatch {
 
     /**
      * Detect and return the ASM version to use.
+     *
      * @return The ASM version
      */
     private static int asmVersion() {
         try {
             Opcodes.class.getDeclaredField("ASM8");
             return 8 << 16 | 0 << 8; // Opcodes.ASM8
-        } catch (NoSuchFieldException nsfe) {}
+        } catch (NoSuchFieldException nsfe) {
+        }
         try {
             Opcodes.class.getDeclaredField("ASM7");
             return 7 << 16 | 0 << 8; // Opcodes.ASM7
-        } catch (NoSuchFieldException nsfe) {}
+        } catch (NoSuchFieldException nsfe) {
+        }
         try {
             Opcodes.class.getDeclaredField("ASM6");
             return 6 << 16 | 0 << 8; // Opcodes.ASM6
-        } catch (NoSuchFieldException nsfe) {}
+        } catch (NoSuchFieldException nsfe) {
+        }
         try {
             Opcodes.class.getDeclaredField("ASM5");
             return 5 << 16 | 0 << 8; // Opcodes.ASM5
-        } catch (NoSuchFieldException nsfe) {}
-        System.out.println("Warning: ASM5 doesn't seem to be supported");
+        } catch (NoSuchFieldException nsfe) {
+            System.err.println("Field couldn't be found, this is bad, defaulting to ASM4");
+        }
+        System.err.println("Warning: ASM5 doesn't seem to be supported");
         return Opcodes.ASM4;
     }
 }
